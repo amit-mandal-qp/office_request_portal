@@ -1,0 +1,28 @@
+{
+  "name": "QuestionPro BD — Office Requests",
+  "short_name": "Office Requests",
+  "description": "Submit and manage office requests at QuestionPro BD",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#1B3380",
+  "theme_color": "#1B3380",
+  "lang": "en-BD",
+  "categories": ["productivity", "utilities"],
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-maskable.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [],
+  "prefer_related_applications": false
+}

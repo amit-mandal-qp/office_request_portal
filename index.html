@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Office Requests" />
+  <meta name="theme-color" content="#1B3380" />
+  <meta name="description" content="Internal office request system — QuestionPro BD" />
+
+  <title>Office Requests — QuestionPro BD</title>
+
+  <!-- PWA manifest -->
+  <link rel="manifest" href="manifest.json" />
+
+  <!-- Apple touch icon -->
+  <link rel="apple-touch-icon" href="icon.svg" />
+
+  <!-- Google Fonts: Fira Sans + Material Symbols Rounded -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" rel="stylesheet" />
+
+  <!-- QuestionPro Design System tokens + bundle -->
+  <link rel="stylesheet" href="_ds/questionpro-design-system-8f51d4ab-dac4-4db7-9f1f-921e9f066bfb/tokens/fonts.css" />
+  <link rel="stylesheet" href="_ds/questionpro-design-system-8f51d4ab-dac4-4db7-9f1f-921e9f066bfb/tokens/colors.css" />
+  <link rel="stylesheet" href="_ds/questionpro-design-system-8f51d4ab-dac4-4db7-9f1f-921e9f066bfb/tokens/typography.css" />
+  <link rel="stylesheet" href="_ds/questionpro-design-system-8f51d4ab-dac4-4db7-9f1f-921e9f066bfb/tokens/spacing.css" />
+  <link rel="stylesheet" href="_ds/questionpro-design-system-8f51d4ab-dac4-4db7-9f1f-921e9f066bfb/tokens/radii.css" />
+  <link rel="stylesheet" href="_ds/questionpro-design-system-8f51d4ab-dac4-4db7-9f1f-921e9f066bfb/styles.css" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body, #root {
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--qp-gray-10);
+      color: var(--qp-dark-blue);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overscroll-behavior: none;
+    }
+
+    /* Material Symbols — !important so no parent font: shorthand can override the icon font */
+    .material-symbols-rounded {
+      font-family: 'Material Symbols Rounded' !important;
+      font-style: normal !important;
+      font-weight: normal !important;
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      vertical-align: middle;
+      user-select: none;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* Scrollbar polish */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--qp-gray-40); border-radius: 4px; }
+
+    /* Remove tap highlight on mobile */
+    * { -webkit-tap-highlight-color: transparent; }
+
+    /* Mobile: remove 300ms tap delay */
+    button, a, [role="button"] { touch-action: manipulation; }
+
+    /* iOS safe-area tokens */
+    :root {
+      --sat: env(safe-area-inset-top, 0px);
+      --sab: env(safe-area-inset-bottom, 0px);
+    }
+
+    /* Smooth momentum scroll on iOS for any overflow container */
+    [data-scroll] { -webkit-overflow-scrolling: touch; }
+
+    /* Loading shimmer while React mounts */
+    #splash {
+      position: fixed; inset: 0;
+      background: var(--qp-dark-blue);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 14px; z-index: 9999;
+      transition: opacity .3s ease;
+    }
+    #splash.hidden { opacity: 0; pointer-events: none; }
+    #splash svg { animation: pulse 1.4s ease-in-out infinite; }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: .6; transform: scale(.94); }
+    }
+    #splash p {
+      font: 400 14px/20px var(--font-sans);
+      color: rgba(255,255,255,.5);
+      letter-spacing: .02em;
+    }
+
+    /* PWA install banner */
+    #install-banner {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: white;
+      border-top: 1px solid var(--qp-gray-40);
+      padding: 14px 16px;
+      padding-bottom: max(14px, calc(10px + env(safe-area-inset-bottom, 0px)));
+      display: flex; align-items: center; gap: 12px;
+      z-index: 100;
+      box-shadow: 0 -4px 12px rgba(27,51,128,.1);
+      transform: translateY(100%);
+      transition: transform .3s ease;
+    }
+    #install-banner.visible { transform: translateY(0); }
+    #install-banner .ib-text { flex: 1; }
+    #install-banner .ib-text strong { display: block; font: var(--text-subtitle-02); font-weight: 500; color: var(--qp-dark-blue); }
+    #install-banner .ib-text span { font: var(--text-body-03); color: var(--qp-gray-lead); }
+    #install-banner button {
+      background: var(--qp-electric-blue); color: white;
+      border: none; border-radius: var(--radius-md);
+      padding: 8px 16px; font: var(--text-button-sm);
+      font-family: var(--font-sans); cursor: pointer;
+    }
+    #install-banner .ib-close {
+      background: none; border: none; cursor: pointer;
+      color: var(--qp-gray-100); padding: 4px;
+      display: flex; flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loading splash -->
+  <div id="splash">
+    <svg width="64" height="64" viewBox="0 0 192 192" fill="none">
+      <rect width="192" height="192" rx="38" fill="rgba(255,255,255,.12)"/>
+      <circle cx="96" cy="44" r="9" fill="white"/>
+      <path d="M96 53 C76 53 56 70 56 94 L56 130 L44 146 L148 146 L136 130 L136 94 C136 70 116 53 96 53 Z" fill="white"/>
+      <path d="M84 146 Q84 160 96 160 Q108 160 108 146 Z" fill="white"/>
+    </svg>
+    <p>Office Requests · QuestionPro BD</p>
+  </div>
+
+  <!-- PWA install prompt banner -->
+  <div id="install-banner">
+    <svg width="36" height="36" viewBox="0 0 192 192" fill="none" style="flex-shrink:0;border-radius:8px">
+      <rect width="192" height="192" fill="#1B3380"/>
+      <circle cx="96" cy="44" r="9" fill="white"/>
+      <path d="M96 53 C76 53 56 70 56 94 L56 130 L44 146 L148 146 L136 130 L136 94 C136 70 116 53 96 53 Z" fill="white"/>
+      <path d="M84 146 Q84 160 96 160 Q108 160 108 146 Z" fill="white"/>
+    </svg>
+    <div class="ib-text">
+      <strong>Add to home screen</strong>
+      <span>Get instant request notifications</span>
+    </div>
+    <button id="install-btn">Install</button>
+    <button class="ib-close" id="install-close" aria-label="Dismiss">
+      <span class="material-symbols-rounded" style="font-size:18px">close</span>
+    </button>
+  </div>
+
+  <!-- React root -->
+  <div id="root"></div>
+
+  <!-- React + Babel -->
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <!-- QuestionPro Design System bundle -->
+  <script src="_ds/questionpro-design-system-8f51d4ab-dac4-4db7-9f1f-921e9f066bfb/_ds_bundle.js"></script>
+
+  <!-- App data & storage helpers -->
+  <script src="data.js?v=2"></script>
+
+  <!-- Main React app (JSX via Babel) -->
+  <script type="text/babel" src="app.jsx?v=2"></script>
+
+  <!-- PWA setup + install prompt -->
+  <script>
+    /* ── Splash dismiss ── */
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const s = document.getElementById('splash');
+        if (s) { s.classList.add('hidden'); setTimeout(() => s.remove(), 400); }
+      }, 600);
+    });
+
+    /* ── Service worker registration ── */
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+
+    /* ── Install prompt (Android / Chrome) ── */
+    let deferredInstall = null;
+    const banner   = document.getElementById('install-banner');
+    const installBtn = document.getElementById('install-btn');
+    const closeBtn   = document.getElementById('install-close');
+
+    window.addEventListener('beforeinstallprompt', e => {
+      e.preventDefault();
+      deferredInstall = e;
+      /* Show after a small delay so it doesn't distract on first load */
+      setTimeout(() => banner.classList.add('visible'), 3000);
+    });
+
+    installBtn && installBtn.addEventListener('click', async () => {
+      if (!deferredInstall) return;
+      deferredInstall.prompt();
+      const { outcome } = await deferredInstall.userChoice;
+      deferredInstall = null;
+      banner.classList.remove('visible');
+    });
+
+    closeBtn && closeBtn.addEventListener('click', () => {
+      banner.classList.remove('visible');
+    });
+
+    window.addEventListener('appinstalled', () => {
+      banner.classList.remove('visible');
+    });
+  </script>
+</body>
+</html>

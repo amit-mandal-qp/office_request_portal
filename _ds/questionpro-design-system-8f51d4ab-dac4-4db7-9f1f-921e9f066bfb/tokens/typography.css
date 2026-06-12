@@ -1,0 +1,99 @@
+/* QuestionPro — Typography tokens
+   Typeface: Fira Sans (open-source, humanist sans). Faithful encoding of the
+   official type spec: every named style carries an exact size, weight, and
+   line-height. Only THREE weights are used across the system:
+   Light (300) · Regular (400) · Medium (500). There is no 600/700 in the scale. */
+
+:root {
+  --font-sans: "Fira Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* ---- Weights (the only three in the scale) ---- */
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+
+  /* =====================================================================
+     Per-style tokens — size / weight / line-height
+     Composite `--text-*` tokens are usable directly as  font: var(--text-*);
+     ===================================================================== */
+
+  /* ---- Display ---- */
+  --font-display-01: 48px;            /* Oversized headings, empty states, survey welcome */
+  --font-display-01-weight: 300;      /* Light */
+  --font-display-01-line: 56px;
+  --text-display-01: 300 48px/56px var(--font-sans);
+
+  --font-display-02: 40px;            /* Highlighting key data in dashboards */
+  --font-display-02-weight: 400;      /* Regular */
+  --font-display-02-line: 48px;
+  --text-display-02: 400 40px/48px var(--font-sans);
+
+  /* ---- Headings ---- */
+  --font-heading-01: 32px;            /* Main page title — once per page */
+  --font-heading-01-weight: 400;      /* Regular */
+  --font-heading-01-line: 40px;
+  --text-heading-01: 400 32px/40px var(--font-sans);
+
+  --font-heading-02: 24px;            /* Key data, respondent questions, sub-sections */
+  --font-heading-02-weight: 400;      /* Regular */
+  --font-heading-02-line: 32px;
+  --text-heading-02: 400 24px/32px var(--font-sans);
+
+  --font-heading-03: 18px;            /* Card/widget titles, modal header, RX options */
+  --font-heading-03-weight: 500;      /* Medium */
+  --font-heading-03-line: 32px;
+  --text-heading-03: 500 18px/32px var(--font-sans);
+
+  --font-heading-04: 16px;            /* Lowest section titles, navigation, card titles */
+  --font-heading-04-weight: 500;      /* Medium */
+  --font-heading-04-line: 24px;
+  --text-heading-04: 500 16px/24px var(--font-sans);
+
+  /* ---- Subtitles ---- */
+  --font-subtitle-01: 16px;           /* Most content, instructions, stand-alone text */
+  --font-subtitle-01-weight: 400;
+  --font-subtitle-01-line: 24px;
+  --text-subtitle-01: 400 16px/24px var(--font-sans);
+
+  --font-subtitle-02: 14px;           /* Modal instructions, labels */
+  --font-subtitle-02-weight: 400;
+  --font-subtitle-02-line: 16px;
+  --text-subtitle-02: 400 14px/16px var(--font-sans);
+
+  --font-subtitle-03: 12px;           /* Dropdowns, inputs, table content, chart labels */
+  --font-subtitle-03-weight: 400;
+  --font-subtitle-03-line: 16px;
+  --text-subtitle-03: 400 12px/16px var(--font-sans);
+
+  /* ---- Body ---- */
+  --font-body-01: 16px;               /* Primary content, long paragraphs, guides */
+  --font-body-01-weight: 400;
+  --font-body-01-line: 24px;
+  --text-body-01: 400 16px/24px var(--font-sans);
+
+  --font-body-02: 14px;               /* Secondary / supporting info, denser layouts */
+  --font-body-02-weight: 400;
+  --font-body-02-line: 16px;
+  --text-body-02: 400 14px/16px var(--font-sans);
+
+  --font-body-03: 12px;               /* Tertiary, glanceable text */
+  --font-body-03-weight: 400;
+  --font-body-03-line: 16px;
+  --text-body-03: 400 12px/16px var(--font-sans);
+
+  /* ---- Button text ---- */
+  --font-button-lg: 16px;             /* Respondent-experience buttons */
+  --font-button-lg-weight: 400;
+  --font-button-lg-line: 24px;
+  --text-button-lg: 400 16px/24px var(--font-sans);
+
+  --font-button-md: 14px;             /* Standard buttons everywhere */
+  --font-button-md-weight: 400;
+  --font-button-md-line: 16px;
+  --text-button-md: 400 14px/16px var(--font-sans);
+
+  --font-button-sm: 12px;             /* Smallest secondary CTA */
+  --font-button-sm-weight: 400;
+  --font-button-sm-line: 16px;
+  --text-button-sm: 400 12px/16px var(--font-sans);
+}

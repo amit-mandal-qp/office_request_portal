@@ -1,0 +1,12 @@
+/* QuestionPro — Webfont declarations
+   Brand typeface: Fira Sans (open-source, used throughout the product).
+
+   NOTE: font binaries are not bundled in this system. Fira Sans is loaded
+   from Google Fonts via the <link> in each card/kit. If you need offline
+   binaries, drop .woff2 files in assets/fonts/ and point the src below at
+   them. Material Symbols (icon font) substitutes the proprietary Wick icon
+   font — see readme ICONOGRAPHY. */
+
+/* Loaded via:
+   <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+   Declared here for completeness so the compiler indexes the family. */
