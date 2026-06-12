@@ -11,8 +11,11 @@
   },
   "dependencies": {
     "@office/shared": "workspace:*",
+    "@tanstack/react-query": "^5.101.0",
+    "nanoid": "^5.1.11",
     "react": "^19.2.6",
-    "react-dom": "^19.2.6"
+    "react-dom": "^19.2.6",
+    "socket.io-client": "^4.8.3"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

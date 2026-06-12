@@ -28,7 +28,7 @@
 | # | Task | File | Status |
 |---|------|------|--------|
 | 2 | Init pnpm monorepo + Turborepo | [task-02-monorepo-setup.md](task-02-monorepo-setup.md) | ✅ |
-| 3 | Shared types package | [task-03-shared-types.md](task-03-shared-types.md) | ⬜ |
+| 3 | Shared types package | [task-03-shared-types.md](task-03-shared-types.md) | ✅ |
 
 ---
 
@@ -36,10 +36,10 @@
 
 | # | Task | File | Status |
 |---|------|------|--------|
-| 4 | Prisma + SQLite schema + migrations | [task-04-database.md](task-04-database.md) | ⬜ |
-| 5 | Requests module (CRUD + WS broadcast) | [task-05-requests-module.md](task-05-requests-module.md) | ⬜ |
-| 6 | WebSocket gateway (Socket.io) | [task-06-websocket-gateway.md](task-06-websocket-gateway.md) | ⬜ |
-| 7 | Push module (VAPID subscriptions + send) | [task-07-push-module.md](task-07-push-module.md) | ⬜ |
+| 4 | Prisma + SQLite schema + migrations | [task-04-database.md](task-04-database.md) | ✅ |
+| 5 | Requests module (CRUD + WS broadcast) | [task-05-requests-module.md](task-05-requests-module.md) | ✅ |
+| 6 | WebSocket gateway (Socket.io) | [task-06-websocket-gateway.md](task-06-websocket-gateway.md) | ✅ |
+| 7 | Push module (VAPID subscriptions + send) | [task-07-push-module.md](task-07-push-module.md) | ✅ |
 
 ---
 
@@ -47,12 +47,12 @@
 
 | # | Task | File | Status |
 |---|------|------|--------|
-| 8 | React + Vite + TypeScript setup | [task-08-frontend-setup.md](task-08-frontend-setup.md) | ⬜ |
-| 9 | Core hooks (useWebSocket, useRequests, usePushSubscription) | [task-09-hooks.md](task-09-hooks.md) | ⬜ |
-| 10 | Screens: NameEntry + RoleSelect | [task-10-screens-entry.md](task-10-screens-entry.md) | ⬜ |
-| 11 | Screen: Requester + Success | [task-11-screen-requester.md](task-11-screen-requester.md) | ⬜ |
-| 12 | Screen: Fulfillment + required push subscription UX | [task-12-screen-fulfillment.md](task-12-screen-fulfillment.md) | ⬜ |
-| 13 | Service worker (cache-first + push handler) | [task-13-service-worker.md](task-13-service-worker.md) | ⬜ |
+| 8 | React + Vite + TypeScript setup | [task-08-frontend-setup.md](task-08-frontend-setup.md) | ✅ |
+| 9 | Core hooks (useWebSocket, useRequests, usePushSubscription) | [task-09-hooks.md](task-09-hooks.md) | ✅ |
+| 10 | Screens: NameEntry + RoleSelect | [task-10-screens-entry.md](task-10-screens-entry.md) | ✅ |
+| 11 | Screen: Requester + Success | [task-11-screen-requester.md](task-11-screen-requester.md) | ✅ |
+| 12 | Screen: Fulfillment + required push subscription UX | [task-12-screen-fulfillment.md](task-12-screen-fulfillment.md) | ✅ |
+| 13 | Service worker (cache-first + push handler) | [task-13-service-worker.md](task-13-service-worker.md) | ✅ |
 
 ---
 
@@ -60,8 +60,8 @@
 
 | # | Task | File | Status |
 |---|------|------|--------|
-| 14 | Docker + Nginx setup | [task-14-docker-nginx.md](task-14-docker-nginx.md) | ⬜ |
-| 15 | mkcert SSL + LAN hostname | [task-15-ssl-lan.md](task-15-ssl-lan.md) | ⬜ |
+| 14 | Docker + Nginx setup | [task-14-docker-nginx.md](task-14-docker-nginx.md) | ✅ |
+| 15 | mkcert SSL + LAN hostname | [task-15-ssl-lan.md](task-15-ssl-lan.md) | ✅ |
 
 ---
 
@@ -71,3 +71,37 @@
 - All UI strings bilingual: English + Bengali
 - No authentication — name entry only
 - See `planning/2026-06-10-office-request-portal-design.md` for full spec
+
+## Running the Backend
+
+```bash
+# Generate VAPID keys (one-time)
+npx web-push generate-vapid-keys
+
+# Copy .env.example → apps/api/.env and fill in keys
+cp .env.example apps/api/.env
+
+# Run dev server (migrations already applied)
+pnpm --filter api dev
+```
+
+## Running the Frontend
+
+```bash
+# Set VITE_VAPID_PUBLIC_KEY in apps/web/.env (must match backend VAPID_PUBLIC_KEY)
+echo "VITE_VAPID_PUBLIC_KEY=<your-public-key>" > apps/web/.env
+
+pnpm --filter web dev
+```
+
+## mkcert Setup (Task 15 — one-time server setup)
+
+```bash
+mkcert -install
+mkcert office.qpbd.local
+mv office.qpbd.local.pem docker/nginx/certs/cert.pem
+mv office.qpbd.local-key.pem docker/nginx/certs/key.pem
+```
+
+Add `office.qpbd.local` → server LAN IP in router DNS or `/etc/hosts`.  
+Per-device: install mkcert root CA → trust it → add DNS entry → open `https://office.qpbd.local`.

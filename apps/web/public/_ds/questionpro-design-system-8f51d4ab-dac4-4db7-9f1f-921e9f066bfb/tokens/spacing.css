@@ -1,0 +1,29 @@
+/* QuestionPro — Spacing tokens
+   Three tiers from designTokens.layoutSpacing:
+   minimal (within components), baseline (most common), large (distant groups). */
+
+:root {
+  /* ---- Minimal — internal relationships within components ---- */
+  --space-000: 0px;
+  --space-012: 1px;
+  --space-025: 2px;
+  --space-050: 4px;
+
+  /* ---- Baseline — most common padding / gaps ---- */
+  --space-100: 8px;
+  --space-150: 12px;
+  --space-200: 16px;
+  --space-300: 24px;
+  --space-400: 32px;
+
+  /* ---- Large — distant components / generous real estate ---- */
+  --space-500: 40px;
+  --space-600: 48px;
+  --space-700: 56px;
+  --space-800: 64px;
+  --space-900: 72px;
+  --space-1000: 80px;
+  --space-1100: 88px;
+  --space-1200: 96px;
+  --space-1300: 104px;
+}

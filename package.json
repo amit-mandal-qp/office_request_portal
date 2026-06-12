@@ -1,8 +1,9 @@
 {
   "name": "office-request-portal",
   "private": true,
+  "packageManager": "pnpm@11.6.0",
   "scripts": {
-    "dev": "turbo run dev --parallel",
+    "dev": "turbo run dev",
     "build": "turbo run build",
     "lint": "turbo run lint"
   },
@@ -12,8 +13,5 @@
   "engines": {
     "node": ">=20",
     "pnpm": ">=9"
-  },
-  "pnpm": {
-    "dangerouslyAllowAllBuilds": true
   }
 }

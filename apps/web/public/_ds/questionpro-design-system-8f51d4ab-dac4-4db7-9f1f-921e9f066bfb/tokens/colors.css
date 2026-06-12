@@ -1,0 +1,54 @@
+/* QuestionPro — Color tokens
+   Source of truth: QuestionPro design tokens JSON (designTokens.colors).
+   Base palette values + semantic aliases. */
+
+:root {
+  /* ---- Brand ---- */
+  --qp-dark-blue: #1B3380;      /* Trust, key elements, primary surfaces  */
+  --qp-electric-blue: #1B87E6;  /* Primary buttons, hyperlinks, interactive */
+
+  /* ---- Gray scale ---- */
+  --qp-gray-lead: #545E6B;      /* Body text, subtitles, minor hierarchy */
+  --qp-gray-100: #9B9B9B;       /* Descriptive text, notes, disabled */
+  --qp-gray-notification: #555555; /* Tooltip backgrounds */
+  --qp-gray-40: #D8D8D8;        /* Container background + outline */
+  --qp-gray-25: #E8E8E8;        /* Contrast / focus for lighter elements */
+  --qp-gray-20: #EEEEEE;        /* Sidebar background */
+  --qp-gray-10: #F5F5F5;        /* Minor hierarchy / subtle surfaces */
+  --qp-white: #FFFFFF;
+  --qp-black: #1A1A1A;
+
+  /* ---- Notifications: deep (foreground/icon) + soft (background) ---- */
+  --qp-info-deep: #215694;
+  --qp-info-soft: #CCF0FF;
+  --qp-success-deep: #227700;
+  --qp-success-soft: #DFF2BF;
+  --qp-warning-deep: #9F6000;
+  --qp-warning-soft: #FEEFB3;
+  --qp-error-deep: #CC0000;
+  --qp-error-soft: #FFBABA;
+
+  /* ---- Upgrade / payment accent ---- */
+  --qp-upgrade: #F5A300;        /* Plan upgrade CTAs — sense of action/value */
+  --qp-upgrade-hover: #FFCF70;  /* Hover for payment & upgrade actions */
+
+  /* ---- Semantic aliases ---- */
+  --color-primary: var(--qp-electric-blue);
+  --color-primary-strong: var(--qp-dark-blue);
+  --color-link: var(--qp-electric-blue);
+
+  --text-strong: var(--qp-dark-blue);
+  --text-body: var(--qp-gray-lead);
+  --text-muted: var(--qp-gray-100);
+  --text-on-primary: var(--qp-white);
+
+  --surface-page: var(--qp-white);
+  --surface-card: var(--qp-white);
+  --surface-subtle: var(--qp-gray-10);
+  --surface-sidebar: var(--qp-gray-20);
+  --surface-tooltip: var(--qp-gray-notification);
+
+  --border-default: var(--qp-gray-40);
+  --border-subtle: var(--qp-gray-25);
+  --border-focus: var(--qp-electric-blue);
+}

@@ -1,6 +1,6 @@
 # Task 04 — Prisma + SQLite Schema + Migrations
 
-**Status:** ⬜ Not started  
+**Status:** ✅ Done  
 **Phase:** 3 — Backend
 
 ---
@@ -11,48 +11,18 @@ Set up Prisma ORM with SQLite (WAL mode) in `apps/api`. Define the schema, run i
 
 ## Acceptance Criteria
 
-- [ ] `prisma/schema.prisma` matches the design spec exactly
-- [ ] SQLite datasource with `WAL` journal mode pragma
-- [ ] `Request` model with all fields
-- [ ] `PushSubscription` model with all fields
-- [ ] `Urgency` and `Status` enums defined
-- [ ] Initial migration created and applied
-- [ ] `PrismaService` injectable NestJS service
-- [ ] Dev DB at `apps/api/prisma/dev.db`
-- [ ] Prod DB path from `DATABASE_URL` env var
+- [x] `prisma/schema.prisma` matches the design spec
+- [x] SQLite datasource with `WAL` journal mode pragma (via `$queryRawUnsafe` in `onModuleInit`)
+- [x] `Request` model with all fields
+- [x] `PushSubscription` model with all fields
+- [x] `urgency` and `status` as `String` fields with defaults (Prisma 5 SQLite has no native enums; TypeScript enums in `packages/shared` cover type safety)
+- [x] Initial migration created and applied (`prisma/migrations/20260612202640_init/`)
+- [x] `PrismaService` injectable NestJS service (`@Global` module)
+- [x] Dev DB at `apps/api/prisma/dev.db`
+- [x] Prod DB path from `DATABASE_URL` env var
 
-## Schema
+## Notes
 
-```prisma
-model Request {
-  id            String   @id
-  requesterName String
-  category      String
-  categoryEn    String
-  categoryBn    String
-  customText    String?
-  urgency       Urgency  @default(NORMAL)
-  status        Status   @default(PENDING)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-}
-
-model PushSubscription {
-  id          String   @id @default(cuid())
-  endpoint    String   @unique
-  p256dh      String
-  auth        String
-  deviceName  String?
-  createdAt   DateTime @default(now())
-}
-
-enum Urgency { NORMAL URGENT }
-enum Status  { PENDING ACKNOWLEDGED DONE }
-```
-
-## Commands
-
-```bash
-npx prisma migrate dev --name init
-npx prisma generate
-```
+- Downgraded to Prisma 5 (from 7) — Prisma 7 removed `url` from datasource and `datasources` from constructor, requiring driver adapters; too heavy for simple SQLite
+- `$queryRawUnsafe('PRAGMA journal_mode=WAL')` used instead of `$executeRaw` because PRAGMA returns a result set in SQLite
+- Schema uses `String` for urgency/status; `Urgency`/`Status` TypeScript enums in `packages/shared` enforce values at compile time
