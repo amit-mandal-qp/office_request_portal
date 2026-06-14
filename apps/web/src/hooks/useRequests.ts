@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import type { RequestRecord, Status, RequestNewPayload, RequestUpdatedPayload } from '@office/shared'
 import { useWebSocket } from './useWebSocket'
@@ -9,9 +9,11 @@ async function fetchActive(): Promise<RequestRecord[]> {
   return res.json()
 }
 
-export function useRequests() {
+export function useRequests(onNewRequest?: (req: RequestRecord) => void) {
   const qc = useQueryClient()
   const socket = useWebSocket()
+  const onNewRef = useRef(onNewRequest)
+  useEffect(() => { onNewRef.current = onNewRequest })
 
   const { data: requests = [], isLoading } = useQuery({
     queryKey: ['requests'],
@@ -24,6 +26,7 @@ export function useRequests() {
         if (prev.find((r) => r.id === payload.request.id)) return prev
         return [payload.request, ...prev]
       })
+      onNewRef.current?.(payload.request)
     }
 
     const onUpdated = (payload: RequestUpdatedPayload) => {
